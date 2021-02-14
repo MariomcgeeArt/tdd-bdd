@@ -26,6 +26,23 @@ it("should say hello", function() {
 // This is called "Red-Green-Refactor"
 // ========================================================
 
+it("should return area of a rectangle", function() {
+  const area = utils.area(6, 4)
+  expect(area).to.be.a("number")
+  expect(area).to.equal(24)
+})
+
+it("Should return the perimeter of a square", function() {
+  const perimeter = utils.perimeter(6, 4)
+  expect(perimeter).to.be.a("number")
+  expect(perimeter).to.equal(20)
+})
+
+it("should return the area of a circle", function() {
+  const circleArea = utils.circleArea(5)
+  expect(circleArea).to.be.a("number")
+  expect(circleArea).to.equal(78.5)
+})
 
 
 
@@ -50,13 +67,77 @@ it("Should create a new (object) Item with name and price", function() {
   expect(item).to.have.property("quantity", 1)
 })
 
-it("Should return an array containing all items in cart")
+it("Should return an array containing all items in cart", function() {
+  utils.addItemToCart(utils.createItem("apple", 0.99))
+  utils.addItemToCart(utils.createItem("banana", 1.99))
+  utils.addItemToCart(utils.createItem("banana", 1.99))
+  const items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items[0]).to.be.a("object")
+  expect(items[0]).to.have.property("name", "apple")
+  expect(items[0]).to.have.property("price", 0.99)
+  expect(items[0]).to.have.property("quantity", 1)
+  expect(items[1]).to.be.a("object")
+  expect(items[1]).to.have.property("name", "banana")
+  expect(items[1]).to.have.property("price", 1.99)
+  expect(items[1]).to.have.property("quantity", 2)
+})
 
-it("Should add a new item to the shopping cart")
+it("Should add a new item to the shopping cart", function() {
+  const item = utils.createItem("banana", 1.99)
+  let items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 0)
+  utils.addItemToCart(item)
+  items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 1)
+  expect(items[0]).to.have.property("name", "banana")
+  expect(items[0]).to.have.property("price", 1.99)
+  expect(items[0]).to.have.property("quantity", 1)
+})
 
-it("Should return the number of items in the cart")
+it("Should return the number of items in the cart", function() {
+  const item = utils.createItem("banana", 1.99)
+  let items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 0)
+  expect(utils.getNumItemsInCart()).to.be.a("number")
+  expect(utils.getNumItemsInCart()).to.equal(0)
+  utils.addItemToCart(item)
+  items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 1)
+  expect(items[0]).to.have.property("name", "banana")
+  expect(items[0]).to.have.property("price", 1.99)
+  expect(items[0]).to.have.property("quantity", 1)
+  expect(utils.getNumItemsInCart()).to.be.a("number")
+  expect(utils.getNumItemsInCart()).to.equal(1)
+})
 
-it("Should remove items from cart")
+it("Should remove items from cart", function() {
+  const item = utils.createItem("banana", 1.99)
+  let items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 0)
+  expect(utils.getNumItemsInCart()).to.be.a("number")
+  expect(utils.getNumItemsInCart()).to.equal(0)
+  utils.addItemToCart(item)
+  items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 1)
+  expect(items[0]).to.have.property("name", "banana")
+  expect(items[0]).to.have.property("price", 1.99)
+  expect(items[0]).to.have.property("quantity", 1)
+  expect(utils.getNumItemsInCart()).to.be.a("number")
+  expect(utils.getNumItemsInCart()).to.equal(1)
+  utils.removeItemFromCart(item)
+  items = utils.getShoppingCart()
+  expect(items).to.be.a("array")
+  expect(items).to.have.property("length", 0)
+  expect(utils.getNumItemsInCart()).to.be.a("number")
+  expect(utils.getNumItemsInCart()).to.equal(0)
+})
 
 // ========================================================
 // Stretch Challenges
